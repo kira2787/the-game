@@ -1,5 +1,26 @@
-# Project exclude paths
-/project/project/target/
-/project/target/
-/target/
-/target/scala-2.13/classes/
+# IntelliJ
+.idea/
+target/
+
+# sbt
+.cache
+.history
+.lib/
+dist/*
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+project/target/
+project/project/
+project/project/target/
+logs/
+project/.sbtserver
+.sbtserver/
+
+# Scala-IDE specific
+.scala_dependencies
+.worksheet
+
+# Application
+yourgame.log
