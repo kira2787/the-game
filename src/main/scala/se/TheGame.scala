@@ -1,13 +1,32 @@
 package se
 
-import se.model._
+import se.aview.Tui
+import se.controller.Controller
+import se.model.{Deck, DiscardPile, Hand}
+
+import scala.io.StdIn.readLine
 
 object TheGame {
+  val controller = new Controller(new DiscardPile, new Hand, new Deck)
+  val tui = new Tui(controller)
+  controller.notifyObservers
+
+  var player: List[String] = Nil
+
+  println("Welcome at THE GAME")
+
+  println("Please enter the names of the players (only separated by a space)")
+  player = readLine().split(" ").toList
+
+  println("Enter h for help or n for new Game. " +
+    "With entering o after starting the game, you are able to order the cards on your hand.")
+
   def main(args: Array[String]): Unit = {
-    println("Hello, my game is THE game")
+    var input: String = ""
 
-    val player1 = Player("Player 1")
-    println("Hello, " + player1.name)
-
+    do {
+      input = readLine()
+      tui.processInputLine(input)
+    } while (input != "q")
   }
 }

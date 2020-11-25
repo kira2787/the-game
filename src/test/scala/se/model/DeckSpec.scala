@@ -4,14 +4,15 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
 class DeckSpec extends AnyWordSpec with Matchers {
+
   "The size of the deck" when {
     "new" should {
-      val deck = Deck().createDeck()
+      val deck = new Deck()
       "size should be" in {
-        deck.length should be(196)
+        deck.deck.length should be(196)
       }
       "contain a number twice" in {
-        deck.count(_ == 2) should be(2)
+        deck.deck.count(_ == 2) should be(2)
       }
     }
   }

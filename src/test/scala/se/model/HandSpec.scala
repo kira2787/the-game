@@ -6,9 +6,9 @@ import org.scalatest.wordspec.AnyWordSpec
 class HandSpec extends AnyWordSpec with Matchers {
   "The hand" when {
     "new" should {
-      val hand = Hand().initializeHand()
+      val hand = new Hand()
       "should be" in {
-        hand.length should be(0) //traversable shouldBe empty books should not be empty
+        hand.hand.length should be(0)
       }
     }
   }
