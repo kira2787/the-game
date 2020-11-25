@@ -41,7 +41,6 @@ class Controller(var discardPile: DiscardPile, var hand: Hand, var deck: Deck) e
 
     for (x <- hand.hand) {
       if ((x > pile(0) && x > pile(1)) || (x < pile(2) && x < pile(3))) false
-      // not lost, if card on hand is exact 10 less then pile 0,1 oder 10 more than pile 2,3
       else if ((x + 10) == pile(0) || (x + 10) == pile(1) || (x - 10) == pile(2) || (x - 10) == pile(3)) false
     }
     true
