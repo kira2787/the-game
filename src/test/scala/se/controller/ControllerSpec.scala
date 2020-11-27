@@ -2,13 +2,17 @@ package se.controller
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import se.TheGame.controller
+import se.model.{Deck, DiscardPile, Hand}
 import se.util.Observer
 
 import scala.language.reflectiveCalls
 
 class ControllerSpec extends AnyWordSpec with Matchers {
   "A controller" when {
+    var discardPile = new DiscardPile()
+    var hand = new Hand()
+    var deck = new Deck()
+    val controller = new Controller(discardPile, hand, deck)
     "observed by an Observer" should {
       val observer = new Observer {
         var updated: Boolean = false
