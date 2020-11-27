@@ -26,7 +26,7 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       "notify its Observer after creation" in {
         controller.createGame()
         observer.updated should be(true)
-        controller.discardPile should be(1,1,100,100)
+        controller.discardPile should be(DiscardPile(Vector(1,1,100,100)))
       }
       "notify its Observer after drawing" in {
         controller.createGame()
