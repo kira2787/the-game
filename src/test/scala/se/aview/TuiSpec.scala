@@ -32,8 +32,8 @@ class TuiSpec extends AnyWordSpec with Matchers {
       controller.checkMove(controller.hand.hand(1), 0) should be(true)
     }
     "send invalid message on invalid input" in {
-      tui.processInputLine("abc")
-      controller.checkMove(111, 0) should be false
+      tui.processInputLine("111 0")
+      controller.checkMove(111, 0) should be(false)
     }
   }
 }
