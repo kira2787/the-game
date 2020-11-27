@@ -23,7 +23,9 @@ class Tui(controller: Controller) extends Observer {
     }
   }
 
-  override def update: Unit = println(controller.gameToString)
+  override def update: Boolean = {
+    println(controller.gameToString); true
+  }
 
   def invalidInputMsg() = {
     println("Your input was invalid. Please enter h for help and read the game rules again.")
