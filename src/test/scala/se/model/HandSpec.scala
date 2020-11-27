@@ -25,7 +25,7 @@ class HandSpec extends AnyWordSpec with Matchers {
     }
     "after drawing during the game" should {
       "hand should be" in {
-        hand = hand.firstDraw(List[Int](5, 4, 3, 2, 1))
+        //hand = hand.firstDraw(List[Int](5, 4, 3, 2, 1))
         hand = hand.draw(6, 0) //new value index
         hand should be(Hand(Vector(6, 4, 3, 2, 1)))
       }
