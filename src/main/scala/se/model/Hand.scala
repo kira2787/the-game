@@ -3,8 +3,8 @@ package se.model
 case class Hand(hand: Vector[Int]) {
   def this() = this(Vector.empty)
 
-  def draw(newValue: Int, index: Int): Hand = {
-    copy(hand.updated(index, newValue))
+  def draw(value: Int, index: Int): Hand = {
+    copy(hand.updated(index, value))
   }
 
   def firstDraw(deck: List[Int]): Hand = {
@@ -13,5 +13,9 @@ case class Hand(hand: Vector[Int]) {
 
   def sort(): Hand = {
     copy(hand.sorted)
+  }
+
+  def redoHand(index:Int, value:Int): Hand = {
+    copy(hand.updated(index, value))
   }
 }

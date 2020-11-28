@@ -1,16 +1,16 @@
 package se.controller
 
+import se.controller.GameState._
 import se.model.{Deck, DiscardPile, Hand}
-import se.util.Observable
+import se.util.{Observable, UndoManager}
 
 
 class Controller(var discardPile: DiscardPile, var hand: Hand, var deck: Deck) extends Observable {
 
-  def createGame(): Unit = {
+  var gameState: GameState = IDLE
+  private val undoManager = new UndoManager
 
-    discardPile = new DiscardPile()
-    deck = new Deck()
-    hand = new Hand()
+  def createGame(): Unit = {
 
     hand = hand.firstDraw(deck.deck.slice(0, 5))
     deck = deck.recreateDeck(5)
@@ -18,16 +18,12 @@ class Controller(var discardPile: DiscardPile, var hand: Hand, var deck: Deck) e
     notifyObservers
   }
 
-  def draw(value: Int, toIndex: Int): Unit = {
-
-    hand = hand.draw(deck.deck.head, hand.hand.indexOf(value))
-    deck = deck.recreateDeck(1)
-    discardPile = discardPile.draw(value, toIndex)
-
+  def draw(handIndex:Int, pileIndex: Int): Unit = {
+    undoManager.doStep(new DrawCommand(handIndex, pileIndex, this))
     notifyObservers
   }
 
-  def gameToString: String = discardPile.toString + "\n\nHand:" + hand.toString + "\n\n - - - -"
+  def gameToString(): String = discardPile.toString + "\n\nHand:" + hand.toString + "\n\n - - - -"
 
   def sortHand(): Unit = {
     hand = hand.sort()
@@ -49,25 +45,37 @@ class Controller(var discardPile: DiscardPile, var hand: Hand, var deck: Deck) e
       case 1 => false
       case _ => true
     }
-
   }
 
-  def checkMove(value: Int, toIndex: Int): Boolean = {
-    val pile = discardPile.discardPile
+  def checkMove(handIndex: Int, pileIndex: Int): Boolean = {
+    var handVal = 0
+    var pileVal = 0
     var bool: Int = 0
 
-    if (!hand.hand.contains(value)) bool = 1
-    else if (toIndex > pile.length) bool = 1
+    if (handIndex > 4 || pileIndex > 3) bool = 1
+    else {
+      handVal = hand.hand(handIndex)
+      pileVal = discardPile.discardPile(pileIndex)
 
-    if (toIndex < 2) {
-      if ((value < pile(toIndex)) && (!((value + 10) == pile(toIndex)))) bool = 1
-    } else {
-      if ((value > pile(toIndex)) && (!((value - 10) == pile(toIndex)))) bool = 1
+      if (pileIndex < 2) {
+        if ((handVal < pileVal) && (!((handVal + 10) == pileVal))) bool = 1
+      } else {
+        if ((handVal > pileVal) && (!((handVal - 10) == pileVal))) bool = 1
+      }
     }
-
     bool match {
       case 1 => false
       case _ => true
     }
+  }
+
+  def undo(): Unit = {
+    undoManager.undoStep()
+    notifyObservers
+  }
+
+  def redo(): Unit = {
+    undoManager.redoStep()
+    notifyObservers
   }
 }
