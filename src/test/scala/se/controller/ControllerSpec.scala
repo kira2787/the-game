@@ -48,11 +48,15 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       }
       "notify its Observer after check a move" in {
         controller.checkMove(0, 2) should be(true)
+        controller.checkMove(2, 3) should be(true)
         controller.checkMove(111, 0) should be(false)
         controller.checkMove(0, 5) should be(false)
         observer.updated should be(true)
       }
       "notify its Observer after check loose" in {
+        controller.checkLoose() should be(false)
+        controller.discardPile = DiscardPile(Vector(99,99,1,1))
+        controller.hand = Hand(Vector(9, 89, 54, 11, 76))
         controller.checkLoose() should be(false)
         controller.hand = Hand(Vector(9, 13, 54, 69, 76))
         controller.discardPile = DiscardPile(Vector(99,99,1,1))
