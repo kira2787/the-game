@@ -37,11 +37,6 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         observer.updated should be(true)
         controller.discardPile.discardPile(0) should be(newValue)
       }
-      "notify its Observer after sorting cards" in {
-        controller.sortHand()
-        observer.updated should be(true)
-        // a test?
-      }
       "notify its Observer after check win" in {
         observer.updated should be(true)
         controller.checkWin() should be(false)
@@ -51,6 +46,12 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         controller.checkMove(2, 3) should be(true)
         controller.checkMove(111, 0) should be(false)
         controller.checkMove(0, 5) should be(false)
+        observer.updated should be(true)
+      }
+      "notify its Observer after sorting cards" in {
+        controller.hand = Hand(Vector(9, 89, 54, 11, 76))
+        controller.sortHand()
+        controller.hand should be(Hand(Vector(9, 11, 54, 76, 89)))
         observer.updated should be(true)
       }
       "notify its Observer after check loose" in {
