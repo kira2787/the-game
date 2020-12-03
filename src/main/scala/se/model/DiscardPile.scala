@@ -7,7 +7,7 @@ case class DiscardPile(discardPile: Vector[Int]) {
     copy(discardPile.updated(index, value))
   }
 
-  def redoPile(index:Int, value:Int):DiscardPile={
+  def redoPile(index: Int, value: Int): DiscardPile = {
     copy(discardPile.updated(index, value))
   }
 }

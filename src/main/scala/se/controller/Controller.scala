@@ -18,7 +18,7 @@ class Controller(var discardPile: DiscardPile, var hand: Hand, var deck: Deck) e
     notifyObservers
   }
 
-  def draw(handIndex:Int, pileIndex: Int): Unit = {
+  def draw(handIndex: Int, pileIndex: Int): Unit = {
     undoManager.doStep(new DrawCommand(handIndex, pileIndex, this))
     notifyObservers
   }
@@ -34,39 +34,38 @@ class Controller(var discardPile: DiscardPile, var hand: Hand, var deck: Deck) e
 
   def checkLoose(): Boolean = {
     val pile = discardPile.discardPile
-    var bool: Int = 0
+    var bool: Boolean = true
 
     for (x <- hand.hand) {
-      if ((x > pile(0) && x > pile(1)) || (x < pile(2) && x < pile(3))) bool = 1
-      else if ((x + 10) == pile(0) || (x + 10) == pile(1) || (x - 10) == pile(2) || (x - 10) == pile(3)) bool = 1
+      for (p <- pile if pile.indexOf(p) < 2) {
+        if (x > p) bool = false
+        if ((x + 10) == p) bool = false
+      }
+      for (p <- pile if pile.indexOf(p) >= 2) {
+        if (x < p) bool = false
+        if ((x - 10) == p) bool = false
+      }
     }
-
-    bool match {
-      case 1 => false
-      case _ => true
-    }
+    bool
   }
 
   def checkMove(handIndex: Int, pileIndex: Int): Boolean = {
     var handVal = 0
     var pileVal = 0
-    var bool: Int = 0
+    var bool: Boolean = true
 
-    if (handIndex > 4 || pileIndex > 3) bool = 1
+    if (handIndex > 4 || pileIndex > 3) bool = false
     else {
       handVal = hand.hand(handIndex)
       pileVal = discardPile.discardPile(pileIndex)
 
       if (pileIndex < 2) {
-        if ((handVal < pileVal) && (!((handVal + 10) == pileVal))) bool = 1
+        if ((handVal < pileVal) && (!((handVal + 10) == pileVal))) bool = false
       } else {
-        if ((handVal > pileVal) && (!((handVal - 10) == pileVal))) bool = 1
+        if ((handVal > pileVal) && (!((handVal - 10) == pileVal))) bool = false
       }
     }
-    bool match {
-      case 1 => false
-      case _ => true
-    }
+    bool
   }
 
   def undo(): Unit = {

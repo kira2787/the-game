@@ -16,7 +16,9 @@ class ControllerSpec extends AnyWordSpec with Matchers {
     "observed by an Observer" should {
       val observer = new Observer {
         var updated: Boolean = false
+
         def isUpdated: Boolean = updated
+
         override def update: Boolean = {
           updated = true;
           updated
@@ -26,13 +28,13 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       "notify its Observer after creation" in {
         controller.createGame()
         observer.updated should be(true)
-        controller.discardPile should be(DiscardPile(Vector(1,1,100,100)))
-        controller.hand.hand.length should be (5)
-        controller.deck.deck.length should be (191)
+        controller.discardPile should be(DiscardPile(Vector(1, 1, 100, 100)))
+        controller.hand.hand.length should be(5)
+        controller.deck.deck.length should be(191)
       }
       "notify its Observer after drawing" in {
         val newValue = controller.hand.hand(0)
-        controller.draw(0,0)
+        controller.draw(0, 0)
         observer.updated should be(true)
         controller.discardPile.discardPile(0) should be(newValue)
       }

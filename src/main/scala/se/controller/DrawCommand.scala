@@ -18,6 +18,10 @@ class DrawCommand(handIndex: Int, pileIndex: Int, controller: Controller) extend
       controller.hand = controller.hand.draw(controller.deck.deck.head, handIndex)
       controller.deck = controller.deck.recreateDeck(1)
       controller.gameState = IDLE
+
+      if(controller.checkWin()) controller.gameState = WON
+      if(controller.checkLoose()) controller.gameState = LOST
+
     }
     memento = handIndex :: pileIndex :: oldPile :: Nil
   }

@@ -9,7 +9,7 @@ case class Deck(deck: List[Int]) {
     copy(deck.drop(firstN))
   }
 
-  def redoDeck(value:Int) = {
+  def redoDeck(value: Int) = {
     copy(value :: deck)
   }
 }

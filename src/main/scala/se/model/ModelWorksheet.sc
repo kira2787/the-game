@@ -1,9 +1,9 @@
 import se.model.Player
 
-def addInt (a:Int, b:Int) : Int = a + b
-addInt(17,4)
+def addInt(a: Int, b: Int): Int = a + b
+addInt(17, 4)
 
-def createGame() : String = {
+def createGame(): String = {
 
   val player1 = Player("Spieler 1")
 

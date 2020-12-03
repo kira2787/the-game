@@ -14,7 +14,7 @@ class DiscardPileSpec extends AnyWordSpec with Matchers {
     }
     "after draw" should {
       "should be" in {
-        discardPile = discardPile.draw(0,2)
+        discardPile = discardPile.draw(0, 2)
         discardPile should be(DiscardPile(Vector(2, 1, 100, 100)))
       }
     }

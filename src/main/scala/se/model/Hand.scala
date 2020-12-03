@@ -15,7 +15,7 @@ case class Hand(hand: Vector[Int]) {
     copy(hand.sorted)
   }
 
-  def redoHand(index:Int, value:Int): Hand = {
+  def redoHand(index: Int, value: Int): Hand = {
     copy(hand.updated(index, value))
   }
 }
