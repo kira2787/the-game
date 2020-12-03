@@ -16,11 +16,10 @@ class ControllerSpec extends AnyWordSpec with Matchers {
     "observed by an Observer" should {
       val observer = new Observer {
         var updated: Boolean = false
-
         def isUpdated: Boolean = updated
 
         override def update: Boolean = {
-          updated = true;
+          updated = true
           updated
         }
       }
@@ -47,15 +46,17 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         observer.updated should be(true)
         controller.checkWin() should be(false)
       }
-      "notify its Observer after check loose" in {
-        observer.updated should be(true)
-        controller.checkLoose() should be(false)
-      }
       "notify its Observer after check a move" in {
-        // wieso ist hand null ???
-        //controller.checkMove(hand.hand(0), 0) should be(true)
-        //controller.checkMove(111, 0) should be(false)
-        //controller.checkMove(hand.hand(0), 5) should be(false)
+        controller.checkMove(0, 2) should be(true)
+        controller.checkMove(111, 0) should be(false)
+        controller.checkMove(0, 5) should be(false)
+        observer.updated should be(true)
+      }
+      "notify its Observer after check loose" in {
+        controller.checkLoose() should be(false)
+        controller.hand = Hand(Vector(9, 13, 54, 69, 76))
+        controller.discardPile = DiscardPile(Vector(99,99,1,1))
+        controller.checkLoose() should be(true)
         observer.updated should be(true)
       }
     }

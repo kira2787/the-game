@@ -15,19 +15,19 @@ class Controller(var discardPile: DiscardPile, var hand: Hand, var deck: Deck) e
     hand = hand.firstDraw(deck.deck.slice(0, 5))
     deck = deck.recreateDeck(5)
 
-    notifyObservers
+    notifyObservers()
   }
 
   def draw(handIndex: Int, pileIndex: Int): Unit = {
     undoManager.doStep(new DrawCommand(handIndex, pileIndex, this))
-    notifyObservers
+    notifyObservers()
   }
 
   def gameToString(): String = discardPile.toString + "\n\nHand:" + hand.toString + "\n\n - - - -"
 
   def sortHand(): Unit = {
     hand = hand.sort()
-    notifyObservers
+    notifyObservers()
   }
 
   def checkWin(): Boolean = deck.deck.isEmpty
@@ -70,11 +70,11 @@ class Controller(var discardPile: DiscardPile, var hand: Hand, var deck: Deck) e
 
   def undo(): Unit = {
     undoManager.undoStep()
-    notifyObservers
+    notifyObservers()
   }
 
   def redo(): Unit = {
     undoManager.redoStep()
-    notifyObservers
+    notifyObservers()
   }
 }

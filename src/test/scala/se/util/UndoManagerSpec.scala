@@ -9,6 +9,8 @@ class UndoManagerSpec extends AnyWordSpec with Matchers {
 
     "have a do, undo and redo" in {
       val command = new incrCommand
+      undoManager.undoStep()
+      undoManager.redoStep()
       command.state should be(0)
       undoManager.doStep(command)
       command.state should be(1)
