@@ -21,12 +21,12 @@ class ObservableSpec extends AnyWordSpec with Matchers {
     }
     "notify an Observer" in {
       observer.isUpdated should be(false)
-      observable.notifyObservers
+      observable.notifyObservers()
       observer.isUpdated should be(true)
     }
     "remove an Observer" in {
       observable.remove(observer)
-      observable.subscribers should not contain (observer)
+      observable.subscribers should not contain observer
     }
 
   }

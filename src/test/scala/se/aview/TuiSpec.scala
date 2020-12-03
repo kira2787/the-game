@@ -28,7 +28,7 @@ class TuiSpec extends AnyWordSpec with Matchers {
       tui.processInputLine("o")
     }
     "undo on input 'z'" in {
-      tui.processInputLine("0, 0")
+      tui.processInputLine("0 0")
       tui.processInputLine("z")
     }
     "redo on input 'y'" in {
